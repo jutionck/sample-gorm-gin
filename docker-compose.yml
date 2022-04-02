@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
   database:
     image: postgres:latest
@@ -10,7 +10,7 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_HOST=${DB_HOST}
     ports:
-      - "5432:5432"
+      - "5432"
     volumes:
       - data:/var/lib/postgresql/data
     networks:
@@ -20,13 +20,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file: .env
     depends_on:
       - database
+    env_file:
+      - .env
     networks:
       - sample-go
     ports:
-      - "8081:8081"
+      - "${API_PORT}:${API_PORT}"
 volumes:
   data:
 
