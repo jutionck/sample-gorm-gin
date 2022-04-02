@@ -1,9 +1,13 @@
 FROM golang:alpine
 
+RUN apk update && apk add --no-cache git
+
 WORKDIR /app
 
 COPY . .
 
+RUN go mod tidy
+
 RUN go build -o sample-go
 
-CMD ./sample-go
+ENTRYPOINT [ "/app/sample-go" ]

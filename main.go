@@ -14,24 +14,6 @@ func main() {
 		})
 	})
 
-	// db := NewConfig()
-	// // defer db.Close()
-	// // db.PingTest()
-	// db.Migration(&Todo{})
-
-	// rg := r.Group("/api")
-	// rg.GET("/todos", func(ctx *gin.Context) {
-	// 	var todo []Todo
-	// 	if err := db.Db.Find(&todo).Error; err != nil {
-	// 		ctx.AbortWithStatus(404)
-	// 		fmt.Println(err)
-	// 	} else {
-	// 		ctx.JSON(200, gin.H{
-	// 			"message": "Ok",
-	// 			"data":    todo,
-	// 		})
-	// 	}
-	// })
 	port := os.Getenv("API_PORT")
-	r.Run(port)
+	r.Run(":" + port)
 }
