@@ -1,13 +1,16 @@
-FROM golang:alpine
+FROM golang:alpine as build-env
 
-RUN apk update && apk add --no-cache git
+RUN apk update && apk add git
 
-WORKDIR /app
+WORKDIR /src
 
 COPY . .
 
 RUN go mod tidy
-
 RUN go build -o sample-go
 
-ENTRYPOINT [ "/app/sample-go" ]
+FROM alpine
+WORKDIR /app
+COPY --from=build-env /src/sample-go /app
+
+ENTRYPOINT ./sample-go
